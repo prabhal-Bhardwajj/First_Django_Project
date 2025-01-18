@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal List</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --danger-color: #dc2626;
+            --danger-hover: #b91c1c;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-color: #334155;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-unit) 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem var(--spacing-unit);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .back-home-btn, .go-to-journalapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .back-home-btn:hover, .go-to-journalapp-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        .journal-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .journal-card {
+            background: var(--card-background);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .journal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .journal-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .journal-title:hover {
+            color: var(--secondary-color);
+        }
+
+        .journal-meta {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .journal-content {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+        }
+
+        .journal-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .delete-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: var(--danger-hover);
+        }
+
+        .add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .add-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .journal-card {
+                padding: 1rem;
+            }
+
+            .journal-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">Journal Entries</h1>
+            <!-- Back to Homepage Button -->
+            <a href="/" class="back-home-btn">
+                <i class="fas fa-home"></i> Back to Homepage
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Go to JournalApp Button -->
+        <a href="{% url 'journal_home' %}" class="go-to-journalapp-btn">
+            <i class="fas fa-arrow-left"></i>
+            Go to JournalApp
+        </a>
+
+        <!-- Add New Journal Button -->
+        <a href="{% url 'add_journal' %}" class="add-btn">
+            <i class="fas fa-plus"></i>
+            Add a new Journal Entry
+        </a>
+
+        <ul class="journal-list">
+            {% for journal in journals %}
+                <li class="journal-card">
+                    <div class="journal-header">
+                        <a href="{% url 'journal_for_goal' journal.id %}" class="journal-title">
+                            {{ journal.title | safe }}
+                        </a>
+                    </div>
+                    
+                    <div class="journal-meta">
+                        <i class="far fa-calendar"></i>
+                        <span>Created: {{ journal.created_at }}</span>
+                    </div>
+
+                    <div class="journal-content">
+                        {{ journal.content|slice:":80" | safe  }}{% if journal.content|length > 80 %}...{% endif %}
+                    </div>
+                    
+                    <div class="journal-actions">
+                        <form method="POST" action="{% url 'delete_journal' journal.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this journal?')">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

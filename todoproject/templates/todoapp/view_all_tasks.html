@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tasks</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .task-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .task-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h3 class="mb-4">All Tasks</h3>
+    <div class="btn-group mb-3" role="group">
+        <a href="/" class="btn btn-primary">Back to Homepage</a>
+        <a href="/todo/tasks/add/" class="btn btn-success">Add New Task</a>
+    </div>
+
+    {% if tasks %}
+        <div class="list-group">
+            {% for task in tasks %}
+                <div class="task-card">
+                    <div class="task-details">
+                        <h5>{{ task.title }}</h5>
+                        <p>{{ task.details }}</p>
+                        <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+                    </div>
+                    <div class="task-actions">
+                        <form method="POST" action="{% url 'delete_task' task.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-delete btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No tasks found. <a href="/todo/tasks/add/" class="text-success">Add a new task</a> to get started!</p>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

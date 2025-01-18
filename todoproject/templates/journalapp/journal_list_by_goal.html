@@ -1,0 +1,8 @@
+<h2>Journals for Goal: {{ long_term_goal.name }}</h2>
+<ul>
+    {% for journal in journals %}
+        <li>
+            <a href="{% url 'journal_detail' journal.id %}">{{ journal.title }}</a>
+        </li>
+    {% endfor %}
+</ul>

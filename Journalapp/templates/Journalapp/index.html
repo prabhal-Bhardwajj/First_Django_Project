@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Entries</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #4CAF50;
+        }
+
+        .daily-quote, .journal-list {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .daily-quote p {
+            font-style: italic;
+            color: #555;
+        }
+
+        .journal-entry {
+            background-color: #fafafa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .journal-entry h3 {
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome to the Journal App</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'home' %}">Go to Homepage</a> |
+        <a href="{% url 'add_journal' %}">Add Journal Entry</a> |
+        <a href="{% url 'add_daily_quote' %}">Add Daily Quote</a>
+    </nav>
+
+    <div class="container">
+
+        <section class="daily-quote">
+            <h2>Daily Quote</h2>
+            {% if quote %}
+                <p>"<em>{{ daily_quote.quote }}</em>"</p>
+                <p><strong>Displayed for:</strong> {{ daily_quote.date }}</p>
+            {% else %}
+                <p>No daily quote available. <a href="{% url 'add_daily_quote' %}">Add one!</a></p>
+            {% endif %}
+        </section>
+
+        <section class="journal-list">
+            <h2>Journal Entries</h2>
+            {% if journals %}
+                <ul>
+                    {% for journal in journals %}
+                        <li class="journal-entry">
+                            <h3>{{ journal.title }}</h3>
+                            <p>{{ journal.content }}</p>
+                            <p><em>Created on: {{ journal.created_at }}</em></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No journal entries available. <a href="{% url 'add_journal' %}">Add one!</a></p>
+            {% endif %}
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Prabal Bhardwaj</p>
+    </footer>
+
+</body>
+
+</html>

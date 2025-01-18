@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Journal Entry</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d3dce;
+            --primary-hover: #0b32a8;
+            --secondary-color: #1e293b;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --focus-ring: rgba(79, 70, 229, 0.2);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        header {
+            background: var(--primary-color);
+            padding: 1.5rem 0;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px var(--focus-ring);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">Edit Journal Entry</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_title" class="form-label">Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_content" class="form-label">Content</label>
+                {{ form.content }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_category" class="form-label">Category</label>
+                {{ form.category }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_priority" class="form-label">Priority</label>
+                {{ form.priority }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_due_date" class="form-label">Due Date</label>
+                {{ form.due_date }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password" class="form-label">Password</label>
+                <input type="password" name="password" id="id_password" class="form-control" placeholder="Set a password (optional)">
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+                <a href="{% url 'journal_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    function execCmd(command) {
+        const editor = document.getElementById('basic-editor');
+        document.execCommand(command, false, null);
+        editor.focus();
+    }
+
+    function execCommandWithArg(command, arg) {
+        const editor = document.getElementById('basic-editor');
+        document.execCommand(command, false, arg);
+        editor.focus();
+    }
+</script>
+</html>

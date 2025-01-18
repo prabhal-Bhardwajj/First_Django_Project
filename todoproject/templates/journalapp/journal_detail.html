@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Details</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-color: #334155;
+            --text-light: #64748b;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-unit) 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem var(--spacing-unit);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        .journal-card {
+            background: var(--card-background);
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .journal-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .journal-meta {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .journal-content {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+        }
+
+        .goal-section {
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .goal-title {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .goal-detail {
+            margin-bottom: 0.75rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-top: 2rem;
+        }
+
+        .back-link:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .journal-card {
+                padding: 1.5rem;
+            }
+
+            .journal-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">Journal Details</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="journal-card">
+            <h1 class="journal-title">{{ journal.title }}</h1>
+            <div class="journal-meta">
+                <i class="far fa-calendar"></i>
+                <span>{{ journal.created_at }}</span>
+            </div>
+            <div class="journal-detail">
+                <h1>{{ journal.title | safe }}</h1>
+                <p><strong> Category:</strong> <b>{{ journal.get_category_display }}</b><hr></p>
+                <p><strong>Priority:</strong> <i>{{ journal.get_priority_display }}</i><hr></p>
+                <br>
+                <p>{{ journal.content | safe }}</p>
+                <br>
+                <p><strong><hr></strong></p>
+                
+            </div>
+            <div class="button-group">
+                
+                
+                <a href="{% url 'export_journal_pdf' journal.id %}" class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> <b> Export as PDF </b>
+                <hr>
+                </a>
+            </div>
+            
+            
+
+            
+
+            <a href="{% url 'journal_list' %}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Journal List
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .journal-item:last-child {
+            border-bottom: none;
+        }
+
+        h3 {
+            font-size: 22px;
+            color: #4CAF50;
+        }
+
+        p {
+            font-size: 16px;
+            color: #777;
+            margin: 5px 0;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Journal Entries
+</header>
+
+<div class="container">
+    <ul>
+        {% for journal in journals %}
+            <li class="journal-item">
+                <h3>
+                    <a href="{% url 'journal_for_goal' journal.id %}">{{ journal.title }}</a>
+                </h3>
+                <p>Created: {{ journal.created_at }}</p>
+                <p>
+                    Content: {{ journal.content|slice:":80" }}{% if journal.content|length > 80 %}...{% endif %}
+                </p>
+                
+                <!-- Delete Button -->
+                <form method="POST" action="{% url 'delete_journal' journal.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this journal?')">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_journal' %}" class="add-btn">Add a new Journal Entry</a>
+</div>
+
+</body>
+</html>

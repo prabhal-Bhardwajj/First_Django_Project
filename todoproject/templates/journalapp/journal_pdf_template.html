@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .metadata {
+            font-size: 16px;
+            color: #555;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            text-align: center;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ journal.title }}</h1>
+    <p class="metadata">
+        <strong>Category:</strong> {{ journal.get_category_display }}<br>
+        <strong>Priority:</strong> {{ journal.get_priority_display }}<br>
+        <strong>Created At:</strong> {{ journal.created_at|date:"F j, Y, g:i a" }}
+    </p>
+    <hr>
+    <p>{{ journal.content| safe }}</p>
+    
+    <div class="footer">
+        <hr>
+        <p>Exported <strong>Successfully</strong></p>
+        <p>&copy; {{ now|date:"Y" }} Prabal Bhardwaj</p>
+    </div>
+</body>
+</html>

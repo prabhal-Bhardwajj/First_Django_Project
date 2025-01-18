@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Long-Term Goal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center text-primary">Add a New Long-Term Goal</h1>
+
+        <!-- Go to Homepage Link -->
+        <div class="mb-4">
+            <a href="{% url 'todo_list' %}" class="btn btn-info w-100 py-3">Go to Homepage</a>
+        </div>
+
+        <!-- View All Long-Term Goals -->
+        <div class="mb-4">
+            <a href="{% url 'view_all_long_term_goals' %}" class="btn btn-primary w-100 py-3">View All Long-Term Goals</a>
+        </div>
+
+        <!-- Form to Add Long-Term Goal -->
+        <form method="POST" action="{% url 'add_long_term_goal' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Goal Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Goal Description</label>
+                <textarea class="form-control" id="description" name="description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="due_date" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="due_date" name="due_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="priority" class="form-label">Priority</label>
+                <select class="form-control" id="priority" name="priority">
+                    <option value="high">Urgent and Important</option>
+                    <option value="medium">Not Urgent but Important</option>
+                    <option value="low">Urgent but Not Important</option>
+                    <option value="lowest">Not Urgent and Not Important</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success w-100 py-3">Add Long-Term Goal</button>
+        </form>
+
+        <!-- Display Error if any -->
+        {% if error %}
+        <div class="alert alert-danger mt-3">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
