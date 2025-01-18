@@ -229,7 +229,7 @@
                 <ul>
                     <li class="journal-entry">
                         <h3>{{ journals.0.title }}</h3>
-                        <p>{{ journals.0.content | content}}</p>
+                        <p>{{ journals.0.content | safe }}</p>
                         <p><em>Created on: {{ journals.0.created_at }}</em></p>
                     </li>
                 </ul>
