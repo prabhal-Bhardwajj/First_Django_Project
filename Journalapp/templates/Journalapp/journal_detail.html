@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #4CAF50;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .goal-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-link:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Journal Details
+</header>
+
+<div class="container">
+    <h1>{{ journal.title }}</h1>
+    <p><strong>Created At:</strong> {{ journal.created_at }}</p>
+    <p>{{ journal.content }}</p>
+
+    {% if long_term_goal %}
+        <div class="goal-section">
+            <h2>Associated Goal</h2>
+            <p><strong>Goal Name:</strong> {{ long_term_goal.name }}</p>
+            <p><strong>Goal Description:</strong> {{ long_term_goal.description }}</p>
+        </div>
+    {% else %}
+        <p>This journal entry is not associated with any specific goal.</p>
+    {% endif %}
+
+    <a href="{% url 'journal_list' %}" class="back-link">Back to Journal List</a>
+</div>
+
+</body>
+</html>

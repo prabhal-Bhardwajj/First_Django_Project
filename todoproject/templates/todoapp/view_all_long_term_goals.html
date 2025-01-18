@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Long Term Goals</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h3>All Long Term Goals</h3>
+    <div class="btn-group mb-3" role="group">
+        <!-- Back to Homepage Button -->
+        <a href="/" class="btn btn-primary">Back to Homepage</a>
+
+        <!-- Go to To-Do List App Button -->
+        <a href="{% url 'todo_list' %}" class="btn btn-secondary">Go to To-Do List</a>
+    </div>
+
+    <!-- New Larger Button to Add Long-Term Goal -->
+    <div class="mt-4 mb-4">
+        <a href="{% url 'add_long_term_goal' %}" class="btn btn-warning btn-lg w-100 py-4">Add New Long-Term Goal</a>
+    </div>
+
+    {% if long_term_goals %}
+        <div class="list-group">
+            {% for goal in long_term_goals %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>{{ goal.title }}</h5>
+                        <p>{{ goal.description }}</p>
+                        <p><strong>Due Date:</strong> {{ goal.due_date }}</p>
+                    </div>
+                    <form action="{% url 'delete_long_term_goal' goal.id %}" method="POST" class="ml-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No long-term goals found.</p>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

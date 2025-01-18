@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Entries</title>
+    <style>
+        /* General Reset and Body Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        /* Navigation Styling */
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #1e88e5;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #1565c0;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Section Titles */
+        h2 {
+            font-size: 2rem;
+            color: #1e88e5;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
+        /* Daily Quote Section */
+        .daily-quote,
+        .journal-list {
+            background-color: #ffffff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .daily-quote p {
+            font-style: italic;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .daily-quote p strong {
+            font-weight: 500;
+        }
+
+        /* Journal Entries */
+        .journal-entry {
+            background-color: #f1f8e9;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 6px solid #1e88e5;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .journal-entry:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-entry h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .journal-entry p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .journal-entry em {
+            color: #777;
+        }
+
+        /* View Entries Box */
+        .view-entries-box {
+            background-color: #e3f2fd;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 1.2rem;
+            color: #1e88e5;
+        }
+
+        .view-entries-box a {
+            color: #1e88e5;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .view-entries-box a:hover {
+            color: #1565c0;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #1e88e5;
+            color: white;
+            font-size: 0.9rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .view-entries-box {
+                font-size: 1rem;
+            }
+        }
+
+        /* Aligning the Links and Titles */
+        .inline-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .inline-links a {
+            color: #1e88e5;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .inline-links a:hover {
+            color: #1565c0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the Journal App</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'home' %}">Go to Homepage</a> |
+        <a href="{% url 'add_journal' %}">Add Journal Entry</a> |
+        <a href="{% url 'add_daily_quote' %}">Add Daily Quote</a>
+    </nav>
+
+    <div class="container">
+        <!-- Daily Quote Section -->
+        <section class="daily-quote">
+            <div class="inline-links">
+                <h2>Daily Quote</h2>
+                <a href="http://127.0.0.1:8000/journal/quotes/">View All Quotes</a>
+            </div>
+            {% if daily_quote %}
+                <p>"<em>{{ daily_quote.quote }}</em>"</p>
+                <p><strong>Date:</strong> {{ daily_quote.date }}</p>
+            {% else %}
+                <p>No daily quote available. <a href="{% url 'add_daily_quote' %}">Add one!</a></p>
+            {% endif %}
+        </section>
+
+        <section class="journal-list">
+            <div class="inline-links">
+                <h2>Journal Entries</h2>
+                <a href="http://127.0.0.1:8000/journal/journal-list/">View All Journals</a>
+            </div>
+            {% if journals %}
+                <ul>
+                    <li class="journal-entry">
+                        <h3>{{ journals.0.title }}</h3>
+                        <p>{{ journals.0.content }}</p>
+                        <p><em>Created on: {{ journals.0.created_at }}</em></p>
+                    </li>
+                </ul>
+            {% else %}
+                <p>No journal entries available. <a href="{% url 'add_journal' %}">Add one!</a></p>
+            {% endif %}
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; Prabal Bhardwaj</p>
+    </footer>
+</body>
+
+</html>
