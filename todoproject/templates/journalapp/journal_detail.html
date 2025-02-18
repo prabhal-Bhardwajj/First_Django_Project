@@ -1,3 +1,4 @@
+<!-- journalapp/journal_detail.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -158,6 +159,7 @@
             </div>
             <div class="journal-detail">
                 <h1>{{ journal.title | safe }}</h1>
+                <p><strong> Mood:</strong> <b>{{ journal.get_mood_display }}</b><hr></p>
                 <p><strong> Category:</strong> <b>{{ journal.get_category_display }}</b><hr></p>
                 <p><strong>Priority:</strong> <i>{{ journal.get_priority_display }}</i><hr></p>
                 <br>

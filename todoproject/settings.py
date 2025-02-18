@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'todoapp',
-    'Journalapp',
-    'tinymce',
+    'todoapp',  # App #1
+    'Journalapp', # App #2
+    'tinymce', # Added this for tinymce but not in use anymore
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +57,13 @@ ROOT_URLCONF = 'todoproject.urls'
 MIGRATION_MODULES = {
     'mindmap': None,  
 }
-
+'''
+I just commented out this TINYMCE because of paid API which didnt knew about it 
+'''
+# TINYMCE_DEFAULT_CONFIG = {
+#     'plugins': 'link image', # Example plugins
+#     'toolbar': 'bold italic', # Example toolbar
+# }
 
 TEMPLATES = [
     {

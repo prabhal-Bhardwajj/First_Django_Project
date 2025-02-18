@@ -3,315 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo HOMEPAGE</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Todo App - Productivity Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Inter', sans-serif;
         }
-        .header {
-            background-color: #fff;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            border-radius: 10px;
-        }
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: #007bff;
-        }
-        .header .datetime {
-            font-size: 1.2rem;
-            color: #666;
-            font-weight: 500;
-        }
-        .header .datetime span {
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
-
-        /* Enhanced Task Cards Styling */
-        .task-section h3 {
-            color: #2d3748;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid #4361ee;
-            display: inline-block;
-        }
-        
-        .card {
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-            transition: all 0.3s ease;
-            background: #ffffff;
-            overflow: hidden;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #4361ee 0%, #3a53d3 100%);
-            color: white;
-            font-weight: 600;
-            padding: 1rem 1.5rem;
-            border-bottom: none;
-            font-size: 1.1rem;
-        }
-        
-        .completed-task .card-header {
-            background: linear-gradient(135deg, #2ec4b6 0%, #28ac9f 100%);
-            color: white;
-        }
-        
-        .card-body {
-            padding: 1.5rem;
-            background-color: #fff;
-        }
-        
-        .card-body p {
-            color: #4a5568;
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-        }
-        
-        .card-body strong {
-            color: #2d3748;
-            font-weight: 600;
-        }
-        
-        .card .btn-primary {
-            background: #4361ee;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            font-weight: 500;
+        .theme-switcher {
             transition: all 0.3s ease;
         }
-        
-        .card .btn-primary:hover {
-            background: #3a53d3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
-        }
-        
-        .empty-message {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            color: #718096;
-            font-weight: 500;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-        }
-
-        /* Buttons Group Styling */
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-        .btn-group .btn {
-            border-radius: 8px !important;
-            padding: 10px 20px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .btn-group .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .btn-home {
-            background-color: #4361ee;
-            border-color: #4361ee;
-            color: white;
-        }
-        .btn-home:hover {
-            background-color: #3a53d3;
-            border-color: #3a53d3;
-            color: white;
-        }
-        .btn-add-task {
-            background-color: #2ec4b6;
-            border-color: #2ec4b6;
-            color: white;
-        }
-        .btn-add-task:hover {
-            background-color: #28ac9f;
-            border-color: #28ac9f;
-            color: white;
-        }
-        .btn-add-goal {
-            background-color: #ff9f1c;
-            border-color: #ff9f1c;
-            color: white;
-        }
-        .btn-add-goal:hover {
-            background-color: #f39200;
-            border-color: #f39200;
-            color: white;
-        }
-        .btn-view-tasks {
-            background-color: #e71d36;
-            border-color: #e71d36;
-            color: white;
-        }
-        .btn-view-tasks:hover {
-            background-color: #d01830;
-            border-color: #d01830;
-            color: white;
-        }
-        .btn-view-goals {
-            background-color: #7209b7;
-            border-color: #7209b7;
-            color: white;
-        }
-        .btn-view-goals:hover {
-            background-color: #6408a3;
-            border-color: #6408a3;
-            color: white;
-        }
-        
-        /* Long Term Goals Styling */
-        .long-term-goals ul {
-            padding-left: 0;
-            list-style: none;
-        }
-        .long-term-goals li {
-            margin-bottom: 10px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-        }
-        
-        /* Due Date Badge */
-        .due-date {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
-            background-color: #edf2f7;
-            border-radius: 6px;
-            color: #4a5568;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-        
-        /* Task Details */
-        .task-details {
-            padding: 0.5rem 0;
-            color: #4a5568;
-            font-size: 1rem;
-            line-height: 1.6;
+        .theme-switcher:hover {
+            transform: rotate(180deg);
         }
     </style>
 </head>
-<body>
-    <div class="header">
-        <h1>Todo App</h1>
-        <div class="datetime" id="currentDatetime"></div>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header Section -->
+    <div class="header bg-white dark:bg-gray-800 shadow-lg rounded-lg p-10 text-center mb-8 mx-4">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-5xl font-bold text-blue-600 dark:text-blue-400">TODO App</h1>
+            <button id="themeToggle" class="theme-switcher p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                🌓
+            </button>
+        </div>
+        <div class="datetime text-xl text-gray-600 dark:text-gray-300 font-medium" id="currentDatetime"></div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 mb-4">
-                <div class="btn-group" role="group">
-                    <a href="/" class="btn btn-home">Go to Homepage</a>
-                    <a href="{% url 'add_task' %}" class="btn btn-add-task">Add New Task</a>
-                    <a href="{% url 'add_long_term_goal' %}" class="btn btn-add-goal">Add Long Term Goal</a>
-                    <a href="{% url 'view_all_tasks' %}" class="btn btn-view-tasks">View All Tasks</a>
-                    <a href="{% url 'view_all_long_term_goals' %}" class="btn btn-view-goals">View All Long Term Goals</a>
-                </div>
-            </div>
+    <!-- Main Container -->
+    <div class="container mx-auto px-4">
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">🏠 Go to Homepage</a>
+            <a href="{% url 'add_task' %}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">➕ Add New Task</a>
+            <a href="{% url 'add_long_term_goal' %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">🎯 Add Long Term Goal</a>
+            <a href="{% url 'view_all_tasks' %}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">📋 View All Tasks</a>
+            <a href="{% url 'view_all_long_term_goals' %}" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">📅 View All Long Term Goals</a>
         </div>
-        <div class="row">
-            <div class="col-md-6 task-section">
-                <h3>Pending Tasks</h3>
+
+        <!-- Calendar Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 border-b-2 border-blue-500 pb-2">📅 Task Calendar</h3>
+            <div id="calendar" class="dark:bg-gray-700 rounded-lg overflow-hidden"></div>
+        </div>
+
+        <!-- Task Sections -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Pending Tasks -->
+            <div class="task-section">
+                <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 border-b-2 border-blue-500 pb-2">📝 Pending Tasks</h3>
                 {% for task in pending_tasks %}
-                <div class="card">
-                    <div class="card-header">{{ task.title }} - Priority: {{ task.get_priority_display }}</div>
-                    <div class="card-body">
-                        <div class="task-details">{{ task.details }}</div>
-                        <div class="due-date">
+                <div class="card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-6 transform transition-transform hover:-translate-y-2">
+                    <div class="card-header bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold p-4">
+                        {{ task.title }} - Priority: {{ task.get_priority_display }}
+                    </div>
+                    <div class="card-body p-6">
+                        <div class="task-details text-gray-700 dark:text-gray-300 mb-4">{{ task.details }}</div>
+                        <div class="due-date bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg py-2 px-4 text-sm">
                             <strong>Due Date:</strong> {{ task.due_date }}
                         </div>
-                        <div class="mt-3">
-                            <a href="{% url 'complete_task' task.id %}" class="btn btn-primary">Mark as Completed</a>
+                        <div class="mt-4">
+                            <a href="{% url 'complete_task' task.id %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:-translate-y-1">✅ Mark as Completed</a>
                         </div>
                     </div>
                 </div>
                 {% empty %}
-                <div class="empty-message">No pending tasks!</div>
+                <div class="empty-message bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center text-gray-600 dark:text-gray-400 font-medium">🎉 No pending tasks!</div>
                 {% endfor %}
             </div>
-            <div class="col-md-6 task-section">
-                <h3>Completed Tasks</h3>
+
+            <!-- Completed Tasks -->
+            <div class="task-section">
+                <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 border-b-2 border-green-500 pb-2">✅ Completed Tasks</h3>
                 {% for task in completed_tasks %}
-                <div class="card completed-task">
-                    <div class="card-header">{{ task.title }} - Priority: {{ task.get_priority_display }}</div>
-                    <div class="card-body">
-                        <div class="task-details">{{ task.details }}</div>
-                        <div class="due-date">
+                <div class="card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-6 transform transition-transform hover:-translate-y-2">
+                    <div class="card-header bg-gradient-to-r from-green-500 to-green-400 text-white font-semibold p-4">
+                        {{ task.title }} - Priority: {{ task.get_priority_display }}
+                    </div>
+                    <div class="card-body p-6">
+                        <div class="task-details text-gray-700 dark:text-gray-300 mb-4">{{ task.details }}</div>
+                        <div class="due-date bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg py-2 px-4 text-sm">
                             <strong>Completed On:</strong> {{ task.date }}
                         </div>
                     </div>
                 </div>
                 {% empty %}
-                <div class="empty-message">No completed tasks!</div>
+                <div class="empty-message bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center text-gray-600 dark:text-gray-400 font-medium">📭 No completed tasks!</div>
                 {% endfor %}
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="long-term-goals">
-                    <h3>Long Term Goals</h3>
-                    <ul>
-                        {% for goal in long_term_goals %}
-                        <li>
-                            <h5>{{ goal.title }} - Priority: {{ goal.get_priority_display }}</h5>
-                            <p>{{ goal.description }}</p>
-                            <p><strong>Due Date:</strong> {{ goal.due_date }}</p>
-                        </li>
-                        {% empty %}
-                        <p>No long-term goals!</p>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+
+        <!-- Long Term Goals -->
+        <div class="long-term-goals mt-8">
+            <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 border-b-2 border-purple-500 pb-2">🎯 Long Term Goals</h3>
+            <ul>
+                {% for goal in long_term_goals %}
+                <li class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-4">
+                    <h5 class="text-xl font-semibold text-gray-800 dark:text-gray-100">{{ goal.title }} - Priority: {{ goal.get_priority_display }}</h5>
+                    <p class="text-gray-700 dark:text-gray-300 mt-2">{{ goal.description }}</p>
+                    <p class="text-gray-700 dark:text-gray-300 mt-2"><strong>Due Date:</strong> {{ goal.due_date }}</p>
+                </li>
+                {% empty %}
+                <p class="text-gray-600 dark:text-gray-400 text-center">📭 No long-term goals!</p>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
     <script>
-        function updateDateTime() {
-            var now = new Date();
-            var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            var monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            var dayOfWeek = daysOfWeek[now.getDay()];
-            var day = now.getDate();
-            var month = monthsOfYear[now.getMonth()];
-            var year = now.getFullYear();
-            var hours = now.getHours();
-            var minutes = now.getMinutes();
-            var seconds = now.getSeconds();
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
 
-            var dateTime = `${dayOfWeek}, ${month} ${day}, ${year} - ${hours}:${minutes}:${seconds}`;
+        // FullCalendar Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    // Add your tasks/events here
+                    { title: 'Task 1', date: '2023-10-15' },
+                    { title: 'Task 2', date: '2023-10-20' }
+                ]
+            });
+            calendar.render();
+        });
+
+        // Live DateTime
+        function updateDateTime() {
+            const now = new Date();
+            const dateTime = now.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
             document.getElementById("currentDatetime").textContent = dateTime;
         }
         setInterval(updateDateTime, 1000);
         updateDateTime();
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

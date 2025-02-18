@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
 #Password protection to be added !!!
 from django.contrib import messages
-from .models import Journal, DailyQuote
+from .models import Journal, DailyQuote , JournalCategory
 #-----------------------------------------
 from todoapp.models import LongTermGoal
 #-----------------------------------------
@@ -18,10 +18,17 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.hashers import check_password
-#the password protection 
+#------------------------------------------
+from django.db.models import Q
+#------------------------------------------
+from django.db.models import Count
+from django.shortcuts import render
+
 import os
 
 from xhtml2pdf import pisa
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 '''
 Home view: Renders the homepage of the application.
@@ -46,14 +53,44 @@ def index(request):
 Journal list view: Lists all journal entries in reverse chronological order (most recent first).
 '''
 def journal_list(request):
-    category_name = request.GET.get('category')  # Get category from query parameters
+   
+    # Get query parameters for search and category filtering
+    search_query = request.GET.get('q', '')  # Search term
+    category_name = request.GET.get('category', '')  # Selected category
+
+    # Base queryset: All journals ordered by creation date
+    journals = Journal.objects.all().order_by('-created_at')
+
+    # Apply category filter if provided
     if category_name:
-        journals = Journal.objects.filter(category=category_name).order_by('-id')  # Filter by category
-    else:
-        journals = Journal.objects.all().order_by('-id')  # Fetch all journals if no category is specified
+        journals = journals.filter(category=category_name)
 
-    return render(request, 'Journalapp/journal_list.html', {'journals': journals, 'category_name': category_name})
+    # Apply search filter if provided
+    if search_query:
+        journals = journals.filter(
+            Q(title__icontains=search_query) | Q(content__icontains=search_query)
+        )
 
+    # Pagination logic
+    paginator = Paginator(journals, 5)  # Show 10 journals per page
+    page = request.GET.get('page')  # Get the current page number from the request
+
+    try:
+        journals = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        journals = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g., 9999), deliver last page of results.
+        journals = paginator.page(paginator.num_pages)
+
+    # Pass data to the template
+    return render(request, 'Journalapp/journal_list.html', {
+        'journals': journals,
+        'category_name': category_name,
+        'search_query': search_query,
+        'categories': JournalCategory.choices,  # Pass all categories for filtering
+    })
 def journal_by_category(request, category_name):
     journals = Journal.objects.filter(category=category_name).order_by('-created_at')
     return render(request, 'Journalapp/journal_list.html', {'journals': journals, 'category_name': category_name})
@@ -297,3 +334,8 @@ def export_journal_pdf(request, journal_id):
         return HttpResponse(f'We had some errors <pre>{pisa_status.err}</pre>')
 
     return response
+
+def journal_analytics(request):
+    mood_stats = Journal.objects.values('mood').annotate(count=Count('mood'))
+    entry_count = Journal.objects.count()
+    return render(request, 'journalapp/analytics.html', {'mood_stats': mood_stats, 'entry_count': entry_count})

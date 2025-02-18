@@ -105,6 +105,7 @@
                     <a href="{% url 'journal_for_goal' journal.id %}">{{ journal.title }}</a>
                 </h3>
                 <p>Created: {{ journal.created_at }}</p>
+                <p><strong>Mood:</strong> {{ journal.get_mood_display }}</p>
                 <p>
                     Content: {{ journal.content|slice:":80" }}{% if journal.content|length > 80 %}...{% endif %}
                 </p>
@@ -117,6 +118,23 @@
             </li>
         {% endfor %}
     </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if journals.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ journals.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ journals.number }} of {{ journals.paginator.num_pages }}.
+            </span>
+    
+            {% if journals.has_next %}
+                <a href="?page={{ journals.next_page_number }}">next</a>
+                <a href="?page={{ journals.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 
     <a href="{% url 'add_journal' %}" class="add-btn">Add a new Journal Entry</a>
 </div>

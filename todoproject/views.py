@@ -1,5 +1,5 @@
 '''
-THIS RIGHT HERE IS THE TODOPROJECT MAIN VIEWS.PY
+THIS RIGHT HERE IS THE TODOPROJECT/MAIN VIEWS.PY
 '''
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout

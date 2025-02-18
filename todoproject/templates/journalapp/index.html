@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journal Entries</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
     <style>
         /* General Reset and Body Styling */
         body {
@@ -197,6 +198,9 @@
 <body>
     <header>
         <h1>Welcome to the Journal App</h1>
+        <div class="flex justify-between items-center mb-6">
+        <div class="datetime text-xl text-gray-600 dark:text-gray-300 font-medium" id="currentDatetime"></div>
+        </div>
     </header>
 
     <nav>
@@ -204,6 +208,11 @@
         <a href="{% url 'add_journal' %}">Add Journal Entry</a> |
         <a href="{% url 'add_daily_quote' %}">Add Daily Quote</a>
     </nav>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 border-b-2 border-blue-500 pb-2">📅 Journal Calendar</h3>
+        <div id="calendar" class="dark:bg-gray-700 rounded-lg overflow-hidden"></div>
+    </div>
+
 
     <div class="container">
         <!-- Daily Quote Section -->
@@ -242,6 +251,29 @@
     <footer>
         <p>&copy; Prabal Bhardwaj</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    // Add your tasks/events here
+                    { title: 'Task 1', date: '2023-10-15' },
+                    { title: 'Task 2', date: '2023-10-20' }
+                ]
+            });
+            calendar.render();
+        });
+        function updateDateTime() {
+            const now = new Date();
+            const dateTime = now.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+            document.getElementById("currentDatetime").textContent = dateTime;
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+    </script>
 </body>
 
 </html>

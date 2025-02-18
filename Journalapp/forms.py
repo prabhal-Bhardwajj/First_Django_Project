@@ -2,12 +2,18 @@
 FORMS of JOURNAL
 '''
 from django import forms
-from .models import Journal,JournalCategory
+from .models import Journal,JournalCategory,Mood
 from tinymce.widgets import TinyMCE
 
 
 
 class JournalForm(forms.ModelForm):
+    mood = forms.ChoiceField(
+        choices= Mood.choices,  # Use choices from Mood
+        required=True,
+        label="Mood",
+        widget=forms.Select(attrs={'class': 'form-select'}),  # Optional styling for dropdown
+    )
     long_term_goal = forms.BooleanField(
         required=False,
         label="Is this a Long-Term Goal?",
@@ -32,8 +38,8 @@ class JournalForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Journal  # Make sure this is set to the correct model
-        fields = ['title', 'content', 'password', 'long_term_goal', 'due_date', 'category', 'priority']
+        model = Journal          
+        fields = ['title','mood' , 'content', 'password', 'long_term_goal', 'due_date', 'category', 'priority']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Enter journal title'}),
             'content': forms.Textarea(attrs={'cols': 80, 'rows': 15}),

@@ -281,10 +281,35 @@
                     <label class="form-label" for="id_title">Title</label>
                     {{ form.title }}
                 </div>
-
+                <div class="form-group">
+                    <label for="mood" class="form-label">Mood</label>
+                    {{ form.mood }}
+                </div>
+                <div class="form-group">
+                    <label for="category" class="form-label">Category</label>
+                    
+                    {{ form.category }}
+                </div>
                 <div class="form-group">
                     <label class="form-label" for="id_content">Content</label>
                     <div class="editor-toolbar">
+                        <select onchange="execCommandWithArg('fontSize', this.value)" title="Font Size">
+                            <option value="">Font Size</option>
+                            <option value="1">6</option>
+                            <option value="2">8</option>
+                            <option value="3">10</option>
+                            <option value="4">12</option>
+                            <option value="5">14</option>
+                            <option value="6">18</option>
+                            <option value="7">24</option>
+                            <option value="8">36</option>
+                            <option value="9">48</option>
+                            <option value="10">72</option>
+
+                        </select>
+                        <input type="number" min="6" max="72" onchange="setCustomFontSize(this.value)" placeholder="Custom size" style="width: 100px;">
+                        <button type="button" onclick="execCommandWithArg('fontSize', '1')" title="Decrease Font Size"><i class="fas fa-minus"></i></button>
+                        <button type="button" onclick="execCommandWithArg('fontSize', '7')" title="Increase Font Size"><i class="fas fa-plus"></i></button>
                         <button type="button" onclick="execCmd('bold')" title="Bold"><i class="fas fa-bold"></i></button>
                         <button type="button" onclick="execCmd('italic')" title="Italic"><i class="fas fa-italic"></i></button>
                         <button type="button" onclick="execCmd('underline')" title="Underline"><i class="fas fa-underline"></i></button>
@@ -297,15 +322,54 @@
                         <button type="button" onclick="execCommandWithArg('backColor', 'yellow')" title="Highlight Text"><i class="fas fa-highlighter"></i></button>
                         <button type="button" onclick="execCmd('indent')" title="Indent"><i class="fas fa-indent"></i></button>
                         <button type="button" onclick="execCmd('outdent')" title="Outdent"><i class="fas fa-outdent"></i></button>
+                        
+                        <select onchange="execCommandWithArg('fontName', this.value)" title="Font">
+                        <option value="Arial">Arial</option>
+                        <option value="Brush Script MT">Brush Script</option>
+                        <option value="Consolas">Consolas (code)</option>
+                        <option value="Franklin Gothic Medium">Franklin Gothic</option>
+                        <option value="Geneva">Geneva</option>
+                        <option value="Monaco">Monaco (code)</option>
+                        <option value="Calibri">Calibri</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="Candara">Candara</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Garamond">Garamond</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Lucida Sans Unicode">Lucida Sans</option>
+                        <option value="Palatino Linotype">Palatino</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Trebuchet MS">Trebuchet MS</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Arial Black">Arial Black</option>
+                        <option value="Arial Narrow">Arial Narrow</option>
+                        <option value="Book Antiqua">Book Antiqua</option>
+                        <option value="Century Gothic">Century Gothic</option>
+                        <option value="Copperplate">Copperplate</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Gill Sans">Gill Sans</option>
+                        <option value="Lucida Console">Lucida Console</option>
+                        <option value="Lucida Handwriting">Lucida Handwriting</option>
+                        <option value="MS Sans Serif">MS Sans Serif</option>
+                        <option value="MS Serif">MS Serif</option>
+                        <option value="Palatino">Palatino</option>
+                        <option value="Papyrus">Papyrus</option>
+                        <option value="Symbol">Symbol</option>
+                        <option value="System">System</option>
+                        <option value="Webdings">Webdings</option>
+                        <option value="Wingdings">Wingdings</option>
+                        <option value="Wingdings 2">Wingdings 2</option>
+                        <option value="Wingdings 3">Wingdings 3</option>
+                        </select>
                     </div>
                     <div class="editor-content" id="basic-editor" contenteditable="true"></div>
                     <textarea name="content" id="id_content" style="display:none;"></textarea>
                 </div>
 
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" class="checkbox-input" id="longTermGoalCheck" onclick="toggleDueDateField()">
-                    <label class="checkbox-label" for="longTermGoalCheck">Is this a Long-Term Goal?</label>
-                </div>
+                
 
                 <div class="form-group">
                     <label for="priority" class="form-label">Priority</label>
@@ -316,11 +380,7 @@
                         <option value="lowest">Not Urgent and Not Important</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="category" class="form-label">Category</label>
-                    
-                    {{ form.category }}
-                </div>
+                
                 <div class="form-group" id="dueDateField" style="display: none;">
                     <label class="form-label" for="id_due_date">Due Date</label>
                     {{ form.due_date }}
